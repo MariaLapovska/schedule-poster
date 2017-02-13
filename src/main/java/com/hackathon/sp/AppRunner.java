@@ -6,8 +6,6 @@ import com.hackathon.sp.mapper.CustomMapper;
 import com.hackathon.sp.model.Program;
 import com.hackathon.sp.url.CustomUriGenerator;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.io.BufferedReader;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -29,9 +27,10 @@ public class AppRunner {
                     Integer.valueOf(imageProperties.getProperty("image_width")),
                     Integer.valueOf(imageProperties.getProperty("image_height")),
                     Integer.valueOf(imageProperties.getProperty("padding")),
-                    Color.getColor(imageProperties.getProperty("background_color")),
+                    imageProperties.getProperty("background_color"),
+                    imageProperties.getProperty("primary_font_color"),
+                    imageProperties.getProperty("secondary_font_color"),
                     imageProperties.getProperty("font_family"),
-                    Font.BOLD,
                     Integer.valueOf(imageProperties.getProperty("font_size")),
                     new SimpleDateFormat(imageProperties.getProperty("time_format"))
             );

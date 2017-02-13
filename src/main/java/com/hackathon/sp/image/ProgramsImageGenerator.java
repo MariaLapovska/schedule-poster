@@ -15,6 +15,8 @@ public class ProgramsImageGenerator {
     private int imageHeight;
     private int padding;
     private Color imageBackground;
+    private Color primaryFontColor;
+    private Color secondaryFontColor;
     private Font timeFont;
     private Font titleFont;
     private Font subtitleFont;
@@ -24,19 +26,22 @@ public class ProgramsImageGenerator {
             int imageWidth,
             int imageHeight,
             int padding,
-            Color imageBackground,
+            String imageBackground,
+            String primaryFontColor,
+            String secondaryFontColor,
             String fontFamily,
-            int fontStyle,
             int mainFontSize,
             SimpleDateFormat timeFormat
     ) {
         this.imageWidth = imageWidth;
         this.imageHeight = imageHeight;
         this.padding = padding;
-        this.imageBackground = imageBackground;
-        this.timeFont = new Font(fontFamily, fontStyle, mainFontSize);
-        this.titleFont = new Font(fontFamily, fontStyle, (int) ((double) mainFontSize / 1.5));
-        this.subtitleFont = new Font(fontFamily, fontStyle, mainFontSize / 2);
+        this.imageBackground = rgbStringToColor(imageBackground);
+        this.primaryFontColor = rgbStringToColor(primaryFontColor);
+        this.secondaryFontColor = rgbStringToColor(secondaryFontColor);
+        this.timeFont = new Font(fontFamily, Font.BOLD, mainFontSize);
+        this.titleFont = new Font(fontFamily, Font.BOLD, (int) ((double) mainFontSize / 1.5));
+        this.subtitleFont = new Font(fontFamily, Font.BOLD, mainFontSize / 2);
         this.timeFormat = timeFormat;
     }
 
@@ -75,7 +80,7 @@ public class ProgramsImageGenerator {
         int textYPosition = imageYPosition + timeFont.getSize();
 
         graphics.setFont(timeFont);
-        graphics.setColor(Color.BLACK);
+        graphics.setColor(primaryFontColor);
         graphics.drawString(timeFormat.format(program.getBegin()) + " - " + timeFormat.format(program.getEnd()), textXPosition, textYPosition);
         textYPosition += titleFont.getSize() + padding;
 
@@ -84,7 +89,12 @@ public class ProgramsImageGenerator {
         textYPosition += subtitleFont.getSize() + padding / 2;
 
         graphics.setFont(subtitleFont);
-        graphics.setColor(Color.GRAY);
+        graphics.setColor(secondaryFontColor);
         graphics.drawString(program.getSubtitle(), textXPosition + 1, textYPosition);
+    }
+
+    private static Color rgbStringToColor(String rgbString) {
+        String[] rgb = rgbString.split(",");
+        return new Color(Integer.valueOf(rgb[0]), Integer.valueOf(rgb[1]), Integer.valueOf(rgb[2]));
     }
 }
